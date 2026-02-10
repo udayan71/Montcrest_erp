@@ -1,0 +1,184 @@
+﻿@{
+    ViewData["Title"] = "Manager Dashboard";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<style>
+    :root {
+        --primary: #3b82f6;
+        --primary-dark: #2563eb;
+        --bg-body: #f8fafc;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+    }
+
+    body {
+        background-color: var(--bg-body);
+        font-family: 'Inter', sans-serif;
+        color: var(--text-main);
+    }
+
+    .page-header {
+        padding-top: 2rem;
+        margin-bottom: 2.5rem;
+    }
+
+        .page-header h2 {
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.025em;
+        }
+
+    .dash-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        padding: 2.2rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .dash-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+            border-color: var(--primary);
+        }
+
+    .icon-box {
+        width: 60px;
+        height: 60px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.75rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .icon-orange {
+        background: #fff7ed;
+        color: #ea580c;
+    }
+
+    .icon-blue {
+        background: #eff6ff;
+        color: var(--primary);
+    }
+
+    .icon-slate {
+        background: #f1f5f9;
+        color: #475569;
+    }
+
+    .card-title {
+        font-weight: 700;
+        font-size: 1.3rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .card-desc {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+        flex-grow: 1;
+    }
+
+    .btn-dash {
+        padding: 0.8rem;
+        border-radius: 12px;
+        font-weight: 700;
+        text-decoration: none;
+        text-align: center;
+        transition: all 0.2s;
+        border: none;
+    }
+
+    .btn-primary-action {
+        background: var(--primary);
+        color: white;
+    }
+
+        .btn-primary-action:hover {
+            background: var(--primary-dark);
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+    .coming-soon-badge {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #f1f5f9;
+        color: #64748b;
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        padding: 4px 10px;
+        border-radius: 20px;
+    }
+</style>
+
+<div class="container">
+    <div class="page-header">
+        <div class="header-content">
+            <h2>Manager Command Center</h2>
+            <p class="text-muted">Overview of your team's status and administrative tasks.</p>
+        </div>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success border-0 shadow-sm mb-4 rounded-3">
+            <i class="bi bi-check-circle-fill me-2"></i> @TempData["Success"]
+        </div>
+    }
+
+    <div class="row g-4">
+        <!-- Leave Requests -->
+        <div class="col-md-6 col-lg-4">
+            <div class="dash-card">
+                <div class="icon-box icon-orange">
+                    <i class="bi bi-clipboard-check"></i>
+                </div>
+                <h4 class="card-title">Leave Approvals</h4>
+                <p class="card-desc">Review and respond to pending leave applications submitted by your team members.</p>
+                <a href="/Manager/LeaveApplications" class="btn-dash btn-primary-action">Review Requests</a>
+            </div>
+        </div>
+
+        <!-- Team Reports -->
+        <div class="col-md-6 col-lg-4">
+            <div class="dash-card">
+                
+                <div class="icon-box icon-blue">
+                    <i class="bi bi-bar-chart-line"></i>
+                </div>
+                <h4 class="card-title">Analytics</h4>
+                <p class="card-desc">Monitor leave patterns and team availability with interactive data reports.</p>
+                <button class="btn-dash btn-light w-100" style="background:#f8fafc" disabled>View Insights</button>
+            </div>
+        </div>
+
+        <!-- Profile Settings -->
+        <div class="col-md-6 col-lg-4">
+            <div class="dash-card">
+                
+                <div class="icon-box icon-slate">
+                    <i class="bi bi-person-gear"></i>
+                </div>
+                <h4 class="card-title">Management</h4>
+                <p class="card-desc">Update your department settings and manage your manager profile details.</p>
+                <button class="btn-dash btn-light w-100" style="background:#f8fafc" disabled>Settings</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mb-5"></div>

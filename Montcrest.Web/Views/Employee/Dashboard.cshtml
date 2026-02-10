@@ -1,0 +1,167 @@
+﻿@{
+    ViewData["Title"] = "Employee Dashboard";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<style>
+    :root {
+        --primary: #3b82f6;
+        --primary-dark: #2563eb;
+        --bg-body: #f8fafc;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+    }
+
+    body {
+        background-color: var(--bg-body);
+        font-family: 'Inter', sans-serif;
+        color: var(--text-main);
+    }
+
+    .page-header {
+        padding-top: 2rem;
+        margin-bottom: 2.5rem;
+    }
+
+        .page-header h2 {
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.025em;
+        }
+
+    .dash-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        padding: 2rem;
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .dash-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+            border-color: var(--primary);
+        }
+
+    .icon-box {
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .icon-blue {
+        background: #eff6ff;
+        color: var(--primary);
+    }
+
+    .icon-purple {
+        background: #f5f3ff;
+        color: #7c3aed;
+    }
+
+    .icon-green {
+        background: #f0fdf4;
+        color: #166534;
+    }
+
+    .card-title {
+        font-weight: 700;
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .card-desc {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 2rem;
+        flex-grow: 1;
+    }
+
+    .btn-dash {
+        padding: 0.75rem;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        text-align: center;
+        transition: all 0.2s;
+    }
+
+    .btn-blue {
+        background: var(--primary);
+        color: white;
+    }
+
+        .btn-blue:hover {
+            background: var(--primary-dark);
+            color: white;
+        }
+
+    .btn-outline {
+        border: 1px solid #e2e8f0;
+        color: var(--text-main);
+    }
+
+        .btn-outline:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: var(--primary);
+        }
+</style>
+
+<div class="container">
+    <div class="page-header">
+        <div class="header-content">
+            <h2>Employee Dashboard</h2>
+            <p class="text-muted">Welcome back! Manage your requests and explore new opportunities.</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Apply Leave -->
+        <div class="col-md-6 col-lg-4">
+            <div class="dash-card">
+                <div class="icon-box icon-blue">
+                    <i class="bi bi-calendar-plus"></i>
+                </div>
+                <h4 class="card-title">Request Leave</h4>
+                <p class="card-desc">Need some time off? Submit a new leave application for manager approval.</p>
+                <a href="/Employee/ApplyLeave" class="btn-dash btn-blue">Apply Now</a>
+            </div>
+        </div>
+
+        <!-- Leave History (Updated Link) -->
+        <div class="col-md-6 col-lg-4">
+            <div class="dash-card">
+                <div class="icon-box icon-purple">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+                <h4 class="card-title">Leave History</h4>
+                <p class="card-desc">Check the status of your pending requests and view your leave history.</p>
+                <a href="/Employee/MyLeaves" class="btn-dash btn-outline">View History</a>
+            </div>
+        </div>
+
+        <!-- Career Opportunities -->
+        <div class="col-md-6 col-lg-4">
+            <div class="dash-card">
+                <div class="icon-box icon-green">
+                    <i class="bi bi-rocket-takeoff"></i>
+                </div>
+                <h4 class="card-title">Opportunities</h4>
+                <p class="card-desc">Explore available technologies and internal job openings to grow your career.</p>
+                <a href="/Candidate/AvailableTechnologies" class="btn-dash btn-outline">Explore Tech</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+@Montcrest.API_HostAddress = http://localhost:5211
+
+GET {{Montcrest.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

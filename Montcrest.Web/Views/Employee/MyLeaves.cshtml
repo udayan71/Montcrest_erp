@@ -1,0 +1,242 @@
+﻿@model List<Montcrest.Web.ViewModels.Employee.EmployeeLeaveViewModel>
+
+@{
+    ViewData["Title"] = "My Leaves";
+}
+
+<!-- Fonts and Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<style>
+    :root {
+        --primary: #3b82f6;
+        --primary-dark: #2563eb;
+        --bg-body: #f8fafc;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    body {
+        background-color: var(--bg-body);
+        font-family: 'Inter', sans-serif;
+        color: var(--text-main);
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 2.5rem;
+        padding-top: 2rem;
+    }
+
+    .header-content h2 {
+        font-weight: 700;
+        font-size: 1.75rem;
+        letter-spacing: -0.025em;
+        margin-bottom: 0.5rem;
+        color: var(--text-main);
+    }
+
+    .header-content p {
+        color: var(--text-muted);
+        margin: 0;
+    }
+
+    .header-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-apply-new {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background-color: var(--primary);
+        color: white;
+        padding: 0.6rem 1.2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: all 0.2s;
+        border: none;
+    }
+
+        .btn-apply-new:hover {
+            background-color: var(--primary-dark);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+    .btn-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: white;
+        color: var(--text-main);
+        border: 1px solid #e2e8f0;
+        padding: 0.6rem 1.2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-decoration: none;
+    }
+
+        .btn-back:hover {
+            background: #f8fafc;
+            color: var(--primary);
+            border-color: #cbd5e1;
+        }
+
+    .table-container {
+        background: white;
+        border-radius: 20px;
+        border: 1px solid #e2e8f0;
+        box-shadow: var(--card-shadow);
+        overflow: hidden;
+    }
+
+    .table thead {
+        background-color: #f8fafc;
+    }
+
+        .table thead th {
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 1.25rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+    .table tbody td {
+        padding: 1.25rem 1rem;
+        vertical-align: middle;
+        color: var(--text-main);
+        font-size: 0.95rem;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .status-badge {
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.75rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .status-pending {
+        background: #fffbeb;
+        color: #92400e;
+    }
+
+    .status-approved {
+        background: #f0fdf4;
+        color: #166534;
+    }
+
+    .status-rejected {
+        background: #fef2f2;
+        color: #991b1b;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 5rem 2rem;
+        background: white;
+        border-radius: 24px;
+        border: 2px dashed #e2e8f0;
+    }
+</style>
+
+<div class="container">
+    <div class="page-header">
+        <div class="header-content">
+            <h2>My Leave Applications</h2>
+            <p>Track the status of your submitted leave requests.</p>
+        </div>
+        <div class="header-actions">
+            <a href="/Employee/Dashboard" class="btn-back">
+                <i class="bi bi-arrow-left"></i> Dashboard
+            </a>
+            <a href="/Employee/ApplyLeave" class="btn-apply-new">
+                <i class="bi bi-plus-lg"></i> New Request
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm mb-4" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="empty-state">
+            <i class="bi bi-calendar-x" style="font-size: 3rem; color: #cbd5e1;"></i>
+            <h4 class="mt-3 fw-bold">No Applications Yet</h4>
+            <p class="text-muted">You haven't submitted any leave requests. Use the "New Request" button to get started.</p>
+        </div>
+    }
+    else
+    {
+        <div class="table-container">
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Leave Type</th>
+                            <th>Duration</th>
+                            <th>Status</th>
+                            <th>Applied On</th>
+                            <th>Manager Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var leave in Model)
+                        {
+                            <tr>
+                                <td><span class="fw-bold text-primary">@leave.LeaveType</span></td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="bi bi-calendar3 text-muted"></i>
+                                        <span>@leave.FromDate.ToString("dd MMM") - @leave.ToDate.ToString("dd MMM yyyy")</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    @if (leave.Status.ToString() == "Pending")
+                                    {
+                                        <span class="status-badge status-pending"><i class="bi bi-clock-history"></i> @leave.Status</span>
+                                    }
+                                    else if (leave.Status.ToString() == "Approved")
+                                    {
+                                        <span class="status-badge status-approved"><i class="bi bi-check2-circle"></i> @leave.Status</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status-badge status-rejected"><i class="bi bi-x-circle"></i> @leave.Status</span>
+                                    }
+                                </td>
+                                <td><span class="text-muted small">@leave.AppliedOn.ToString("dd MMM yyyy")</span></td>
+                                <td>
+                                    <div class="text-muted small italic">
+                                        @(string.IsNullOrEmpty(leave.ManagerRemarks) ? "-" : leave.ManagerRemarks)
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>
+<div class="mb-5"></div>

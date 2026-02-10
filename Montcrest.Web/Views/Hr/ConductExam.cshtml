@@ -1,0 +1,232 @@
+﻿@using Montcrest.Web.ViewModels.Hr
+@model ConductExamViewModel
+
+@{
+    ViewData["Title"] = "Conduct Exam";
+}
+
+<!-- Fonts and Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<style>
+    :root {
+        --primary: #3b82f6;
+        --primary-dark: #2563eb;
+        --bg-body: #f8fafc;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    body {
+        background-color: var(--bg-body);
+        font-family: 'Inter', sans-serif;
+        color: var(--text-main);
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 2.5rem;
+        padding-top: 2rem;
+    }
+
+    .header-content h2 {
+        font-weight: 700;
+        font-size: 1.75rem;
+        letter-spacing: -0.025em;
+        margin-bottom: 0.5rem;
+    }
+
+    .header-content p {
+        color: var(--text-muted);
+        margin: 0;
+    }
+
+    .exam-container {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .exam-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        padding: 2.5rem;
+        box-shadow: var(--card-shadow);
+    }
+
+    /* Candidate Info Section */
+    .candidate-info-box {
+        background-color: #f1f5f9;
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 0.75rem;
+    }
+
+        .info-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-item i {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+    .info-label {
+        font-weight: 600;
+        color: var(--text-muted);
+        width: 100px;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+    }
+
+    .info-value {
+        font-weight: 600;
+        color: var(--text-main);
+    }
+
+    /* Form Styling */
+    .form-label {
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .form-control {
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        border: 1px solid #e2e8f0;
+        background-color: #fcfcfd;
+        transition: all 0.2s;
+    }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+    .btn-send {
+        background-color: #10b981; /* Success Green */
+        color: white;
+        font-weight: 600;
+        padding: 0.8rem 1.5rem;
+        border-radius: 12px;
+        width: 100%;
+        border: none;
+        transition: all 0.2s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-top: 1rem;
+    }
+
+        .btn-send:hover {
+            background-color: #059669;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+        }
+
+    .btn-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: white;
+        color: var(--text-main);
+        border: 1px solid #e2e8f0;
+        padding: 0.6rem 1.2rem;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+        .btn-back:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+</style>
+
+<div class="container">
+    <div class="page-header">
+        <div class="header-content">
+            <h2>Conduct Exam</h2>
+            <p>Assign a test link to the candidate for evaluation.</p>
+        </div>
+        <a href="/Hr/Applicants?technologyId=@Model.TechnologyId" class="btn-back">
+            <i class="bi bi-arrow-left"></i> Back to Applicants
+        </a>
+    </div>
+
+    <div class="exam-container">
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success border-0 shadow-sm mb-4 rounded-4 py-3">
+                <i class="bi bi-check-circle-fill me-2"></i> @TempData["Success"]
+            </div>
+        }
+
+        <div class="exam-card">
+            <!-- Candidate Brief -->
+            <div class="candidate-info-box">
+                <div class="info-item">
+                    <i class="bi bi-person-badge"></i>
+                    <span class="info-label">Candidate</span>
+                    <span class="info-value">@Model.CandidateName</span>
+                </div>
+                <div class="info-item">
+                    <i class="bi bi-envelope"></i>
+                    <span class="info-label">Email</span>
+                    <span class="info-value">@Model.Email</span>
+                </div>
+                <div class="info-item">
+                    <i class="bi bi-cpu"></i>
+                    <span class="info-label">Tech</span>
+                    <span class="info-value">@Model.TechnologyName</span>
+                </div>
+            </div>
+
+            <form method="post" asp-action="ConductExam">
+                <input type="hidden" asp-for="ApplicationId" />
+                <input type="hidden" asp-for="TechnologyId" />
+
+                <div class="mb-4">
+                    <label class="form-label">
+                        <i class="bi bi-link-45deg"></i> Google Form Exam Link
+                    </label>
+                    <input type="url"
+                           class="form-control"
+                           asp-for="ExamLink"
+                           placeholder="https://docs.google.com/forms/d/..."
+                           required />
+                    <div class="form-text text-muted small mt-2">
+                        The candidate will receive an email notification with this link.
+                    </div>
+                    <span asp-validation-for="ExamLink" class="text-danger small"></span>
+                </div>
+
+                <button type="submit" class="btn-send">
+                    <i class="bi bi-send-fill"></i> Send Exam Link
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="mb-5"></div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

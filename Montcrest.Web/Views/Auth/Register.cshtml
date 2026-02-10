@@ -1,0 +1,247 @@
+﻿@model Montcrest.Web.ViewModels.RegisterViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Montcrest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-blue: #3b82f6;
+            --outer-bg: #2b67d9;
+            --inner-left-bg: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--outer-bg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Matches Login Card exactly */
+        .auth-card {
+            background: white;
+            width: 100%;
+            max-width: 950px;
+            min-height: 600px; /* Slightly taller to accommodate more fields */
+            display: flex;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .left-panel {
+            flex: 1.1;
+            background-color: var(--inner-left-bg);
+            display: flex;
+            flex-direction: column;
+            padding: 40px;
+            position: relative;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: #1e40af;
+            font-size: 1.4rem;
+            letter-spacing: -0.5px;
+        }
+
+        .illustration-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .illustration-container img {
+                width: 100%;
+                max-width: 380px;
+                height: auto;
+            }
+
+        .right-panel {
+            flex: 1;
+            padding: 40px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-left: 1px solid var(--border-color);
+        }
+
+            .right-panel h2 {
+                font-size: 1.6rem;
+                font-weight: 600;
+                color: var(--text-main);
+                margin-bottom: 25px;
+                text-align: center;
+            }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+            .form-group label {
+                display: block;
+                font-size: 0.85rem;
+                color: var(--text-muted);
+                margin-bottom: 6px;
+            }
+
+        /* Grid for Password and Mobile to save vertical space */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+            .form-control:focus {
+                outline: none;
+                border-color: var(--primary-blue);
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            transition: background 0.2s;
+        }
+
+            .btn-submit:hover {
+                background-color: #2563eb;
+            }
+
+        .signup-text {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+            .signup-text a {
+                color: var(--primary-blue);
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+        @@media (max-width: 850px) {
+            .left-panel {
+                display: none;
+            }
+
+            .auth-card {
+                max-width: 450px;
+            }
+
+            .right-panel {
+                border-left: none;
+                padding: 40px 30px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr; /* Stack on mobile */
+            }
+
+            .full-width {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-card">
+        <!-- Left Panel (Identical to Login) -->
+        <div class="left-panel">
+            <div class="brand-logo">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#2b67d9"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                Montcrest
+            </div>
+            <div class="illustration-container">
+                <img src="img/Job_portal_register.png" alt="Illustration">
+            </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <h2>Create Account</h2>
+
+            <form asp-action="Register" method="post">
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label>Full Name</label>
+                        <input asp-for="FullName" class="form-control" placeholder="Enter your full name" required />
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Email Address</label>
+                        <input asp-for="Email" class="form-control" placeholder="test@gmail.com" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input asp-for="Password" type="password" class="form-control" placeholder="••••••••" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mobile Number</label>
+                        <input asp-for="MobileNumber" class="form-control" placeholder="+1..." required />
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Residential Address</label>
+                        <textarea asp-for="Address" class="form-control" style="height: 70px; resize: none;" placeholder="Enter your full address" required></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Register Now</button>
+
+                <p class="signup-text">
+                    Already have an account? <a href="/Auth/Login">Sign In</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,209 @@
+﻿@model Montcrest.Web.ViewModels.Candidate.CandidateReviewViewModel
+
+@{
+    ViewData["Title"] = "Application Review";
+}
+
+<!-- Fonts and Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<style>
+    :root {
+        --primary: #3b82f6;
+        --primary-dark: #2563eb;
+        --bg-body: #f8fafc;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    body {
+        background-color: var(--bg-body);
+        font-family: 'Inter', sans-serif;
+        color: var(--text-main);
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 2.5rem;
+        padding-top: 2rem;
+    }
+
+    .header-content h2 {
+        font-weight: 700;
+        font-size: 1.75rem;
+        letter-spacing: -0.025em;
+        margin-bottom: 0.5rem;
+        color: var(--text-main);
+    }
+
+    .header-content p {
+        color: var(--text-muted);
+        margin: 0;
+    }
+
+    /* Review Card Styling */
+    .review-container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .review-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        padding: 2.5rem;
+        box-shadow: var(--card-shadow);
+    }
+
+    .info-label {
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .info-label i {
+            color: var(--primary);
+        }
+
+    .info-value {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text-main);
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    /* Resume Section */
+    .resume-box {
+        background-color: #f8fafc;
+        border: 1px dashed #cbd5e1;
+        border-radius: 16px;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 12px;
+    }
+
+    .resume-icon {
+        font-size: 2.5rem;
+        color: var(--primary);
+    }
+
+    /* Buttons */
+    .btn-view-resume {
+        background-color: var(--primary);
+        color: white;
+        font-weight: 600;
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+    }
+
+        .btn-view-resume:hover {
+            background-color: var(--primary-dark);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+        }
+
+    .btn-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: white;
+        color: var(--text-main);
+        border: 1px solid #e2e8f0;
+        padding: 0.6rem 1.2rem;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+        .btn-back:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: var(--primary);
+        }
+
+    .no-resume {
+        color: #ef4444;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+</style>
+
+<div class="container">
+    <div class="page-header">
+        <div class="header-content">
+            <h2>Application Review</h2>
+            <p>Viewing the details of your submitted application.</p>
+        </div>
+        <a href="javascript:history.back()" class="btn-back">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <div class="review-container">
+        <div class="review-card">
+            <!-- Technology Section -->
+            <div class="info-label">
+                <i class="bi bi-briefcase"></i> Applied Technology
+            </div>
+            <div class="info-value">
+                @Model.TechnologyName
+            </div>
+
+            <!-- Resume Section -->
+            <div class="info-label">
+                <i class="bi bi-file-earmark-pdf"></i> Resume Attachment
+            </div>
+
+            <div class="resume-box">
+                @if (!string.IsNullOrEmpty(Model.ResumePath))
+                {
+                    <i class="bi bi-file-earmark-check resume-icon"></i>
+                    <div>
+                        <p class="mb-2 fw-medium">Your resume is attached and ready for review.</p>
+                        <a href="@Model.ResumePath"
+                           target="_blank"
+                           class="btn-view-resume">
+                            <i class="bi bi-eye-fill"></i> View My Resume
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <i class="bi bi-file-earmark-x resume-icon text-danger"></i>
+                    <div class="no-resume">
+                        <i class="bi bi-exclamation-triangle"></i> Resume not available
+                    </div>
+                    <p class="text-muted small mt-1">Please contact support if this is an error.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mb-5"></div>
